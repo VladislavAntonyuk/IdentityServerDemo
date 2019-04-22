@@ -12,44 +12,44 @@ namespace IdentityServerDemo
     {
         public void Configuration(IAppBuilder app)
         {
-           // app.Map("/core", core =>
+            // app.Map("/core", core =>
             //{
-                var factory = new IdentityServerServiceFactory()
-                    .UseInMemoryClients(Config.GetClients())
-                    .UseInMemoryScopes(Config.GetScopes())
-                    .AddCustomUserStore();
+            var factory = new IdentityServerServiceFactory()
+                .UseInMemoryClients(Config.GetClients())
+                .UseInMemoryScopes(Config.GetScopes())
+                .AddCustomUserStore();
 
-                var options = new IdentityServerOptions
+            var options = new IdentityServerOptions
+            {
+                SiteName = "IdentityServerDemo",
+                SigningCertificate = Config.GetCert(),
+                RequireSsl = false,
+                Factory = factory,
+
+                AuthenticationOptions = new AuthenticationOptions
                 {
-                    SiteName = "IdentityServerDemo",
-                    SigningCertificate = Config.GetCert(),
-            RequireSsl = false,
-                    Factory = factory,
-
-                    AuthenticationOptions = new AuthenticationOptions
+                    IdentityProviders = ConfigureAdditionalIdentityProviders,
+                    LoginPageLinks = new LoginPageLink[]
                     {
-                        IdentityProviders = ConfigureAdditionalIdentityProviders,
-                        LoginPageLinks = new LoginPageLink[]
-                        {
                             new LoginPageLink
                             {
                                 Text = "Register",
                                 Href = "localregistration"
                             }
-                        }
-                    },
-
-                    EventsOptions = new EventsOptions
-                    {
-                        RaiseSuccessEvents = true,
-                        RaiseErrorEvents = true,
-                        RaiseFailureEvents = true,
-                        RaiseInformationEvents = true
                     }
-                };
+                },
 
-                app.UseIdentityServer(options);
-           // });
+                EventsOptions = new EventsOptions
+                {
+                    RaiseSuccessEvents = true,
+                    RaiseErrorEvents = true,
+                    RaiseFailureEvents = true,
+                    RaiseInformationEvents = true
+                }
+            };
+
+            app.UseIdentityServer(options);
+            // });
         }
 
         public static void ConfigureAdditionalIdentityProviders(IAppBuilder app, string signInAsType)

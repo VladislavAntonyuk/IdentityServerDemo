@@ -33,6 +33,12 @@ namespace IdentityServerDemo.Services
                 RealName = "User"
             });
         }
+
+        public void Add(CustomUser user)
+        {
+            users.Add(user);
+        }
+
         public CustomUser Find(string userId)
         {
             return users.FirstOrDefault(x => x.Subject == userId);
@@ -46,6 +52,7 @@ namespace IdentityServerDemo.Services
 
     public interface IUserRepository
     {
+        void Add(CustomUser user);
         CustomUser Find(string userId);
         CustomUser ValidateCredentials(string userName, string password);
     }

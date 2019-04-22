@@ -1,5 +1,7 @@
-﻿using IdentityServer3.Core.Configuration;
+﻿using System.Web.Mvc;
+using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Services;
+using IdentityServerDemo.Controllers;
 using IdentityServerDemo.Services;
 
 namespace IdentityServerDemo.IdentityServerConfig

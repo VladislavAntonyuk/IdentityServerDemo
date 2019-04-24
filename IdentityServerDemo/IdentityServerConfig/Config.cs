@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.IdentityModel.Claims;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 using IdentityServer3.Core;
 using IdentityServer3.Core.Models;
+using IdentityServer3.WsFederation.Models;
+using IdentityModel.Constants;
 
 namespace IdentityServerDemo.IdentityServerConfig
 {
@@ -74,6 +77,28 @@ namespace IdentityServerDemo.IdentityServerConfig
                 StandardScopes.OfflineAccess,
             };
 
+        }
+
+            public static IEnumerable<RelyingParty> GetRelyingParties()
+            {
+                return new List<RelyingParty> {
+                    new RelyingParty {
+                        Realm = "urn:testClient",
+                        Name = "testclient",
+                        Enabled = true,
+                        ReplyUrl = "https://localhost:4004/TestClient/",
+                        TokenType = TokenTypes.Saml2TokenProfile11,
+                        ClaimMappings =
+                            new Dictionary<string, string> {
+                                { "sub", ClaimTypes.NameIdentifier },
+                                { "name", ClaimTypes.Name },
+                                { "given_name", ClaimTypes.GivenName },
+                                { "family_name", ClaimTypes.Surname },
+                                { "email", ClaimTypes.Email },
+                                { "upn", ClaimTypes.Upn }
+                            }
+                    }
+                };
         }
     }
 }

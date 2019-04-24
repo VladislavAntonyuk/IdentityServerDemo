@@ -15,5 +15,6 @@ namespace IdentityServerDemo.IdentityServerConfig
             factory.UserService = new Registration<IUserService, CustomUserService>();
             return factory;
         }
+
     }
 }

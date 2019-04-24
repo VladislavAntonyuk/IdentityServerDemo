@@ -3,6 +3,7 @@ using System.Security.Cryptography.X509Certificates;
 using IdentityServer3.Core.Configuration;
 using IdentityServer3.Core.Resources;
 using IdentityServer3.Core.Services;
+using IdentityServer3.Core.Services.Default;
 using IdentityServer3.WsFederation.Configuration;
 using IdentityServer3.WsFederation.Models;
 using IdentityServer3.WsFederation.Services;
@@ -19,10 +20,17 @@ namespace IdentityServerDemo
         {
             // app.Map("/core", core =>
             //{
+
+            var viewOptions = new DefaultViewServiceOptions();
+            viewOptions.Stylesheets.Add("/Content/Site.css");
+            //viewOptions.Scripts.Add("/Content/Site.css");
+
             var factory = new IdentityServerServiceFactory()
                 .UseInMemoryClients(Config.GetClients())
                 .UseInMemoryScopes(Config.GetScopes())
                 .AddCustomUserStore();
+
+            factory.ConfigureDefaultViewService(viewOptions);
 
             var options = new IdentityServerOptions
             {

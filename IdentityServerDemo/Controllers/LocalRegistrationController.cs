@@ -42,7 +42,7 @@ namespace IdentityServerDemo.Controllers
                 };
                 _userRepository.Add(user);
 
-                return Redirect("~/" + Constants.RoutePaths.Login + "?signin=" + signin);
+                return Redirect("~/core/" + Constants.RoutePaths.Login + "?signin=" + signin);
             }
 
             return View();

@@ -14,6 +14,16 @@ namespace IdentityServerDemo.Services
         {
             users.Add(new CustomUser()
             {
+                Password = "test",
+                Subject = "123",
+                Username = "test",
+                AccountLevel = "test",
+                Email = "test@email.com",
+                IsActive = true,
+                RealName = "test"
+            });
+            users.Add(new CustomUser()
+            {
                 Password = "admin",
                 Subject = "khdfkjghkdfjgh",
                 Username = "admin",

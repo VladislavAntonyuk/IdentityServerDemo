@@ -69,8 +69,26 @@ namespace IdentityServerDemo.IdentityServerConfig
             {
                 new Scope
                 {
+                    Enabled = true,
                     Name = "roles",
-                    Claims = new List<ScopeClaim> { new ScopeClaim("role") }
+                    Type = ScopeType.Identity,
+                    Claims = new List<ScopeClaim>
+                    {
+                        new ScopeClaim("role")
+                    }
+                },
+                new Scope
+                {
+                    Enabled = true,
+                    DisplayName = "Sample API",
+                    Name = "sampleApi",
+                    Description = "Access to a sample API",
+                    Type = ScopeType.Resource,
+
+                    Claims = new List<ScopeClaim>
+                    {
+                        new ScopeClaim("role")
+                    }
                 },
                 StandardScopes.OpenId,
                 StandardScopes.Profile,
@@ -83,10 +101,10 @@ namespace IdentityServerDemo.IdentityServerConfig
             {
                 return new List<RelyingParty> {
                     new RelyingParty {
-                        Realm = "urn:testClient",
+                        Realm = "urn:identityServer",
                         Name = "testclient",
                         Enabled = true,
-                        ReplyUrl = "https://localhost:4004/TestClient/",
+                        ReplyUrl = "https://localhost:44331/",
                         TokenType = TokenTypes.Saml2TokenProfile11,
                         ClaimMappings =
                             new Dictionary<string, string> {

@@ -6,13 +6,13 @@ namespace IdentityServerDemo.Controllers
 {
     public class LoginController : Controller
     {
-        [Route("custom/login")]
+        [Route("core/custom/login")]
         public ActionResult Index(string id)
         {
             return View();
         }
 
-        [Route("custom/login")]
+        [Route("core/custom/login")]
         [HttpPost]
         public ActionResult Index(string id, string sub, string name)
         {
@@ -27,7 +27,7 @@ namespace IdentityServerDemo.Controllers
             var returnUrl = msg.ReturnUrl;
 
             env.RemovePartialLoginCookie();
-
+            
             return Redirect(returnUrl);
         }
     }

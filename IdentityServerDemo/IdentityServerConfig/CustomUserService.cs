@@ -3,17 +3,21 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using IdentityServer3.Core.Extensions;
 using IdentityServer3.Core.Models;
+using IdentityServer3.Core.Services;
 using IdentityServer3.Core.Services.Default;
 using IdentityServerDemo.Services;
+using Microsoft.Owin;
 
 namespace IdentityServerDemo.IdentityServerConfig
 {
     public class CustomUserService : UserServiceBase
     {
         private readonly IUserRepository _userRepository;
+        OwinContext ctx;
 
-        public CustomUserService(IUserRepository userRepository)
+        public CustomUserService(IUserRepository userRepository, OwinEnvironmentService owinEnv)
         {
+            ctx = new OwinContext(owinEnv.Environment);
             _userRepository = userRepository;
         }
 
@@ -50,6 +54,13 @@ namespace IdentityServerDemo.IdentityServerConfig
             context.IsActive = user != null && user.IsActive;
 
             return Task.CompletedTask;
+        }
+
+        public override Task PreAuthenticateAsync(PreAuthenticationContext context)
+        {
+            var id = ctx.Request.Query.Get("signin");
+            context.AuthenticateResult = new AuthenticateResult("~/custom/login?id=" + id, (IEnumerable<Claim>)null);
+            return Task.FromResult(0);
         }
     }
 }
